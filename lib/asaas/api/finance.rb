@@ -7,7 +7,7 @@ module Asaas
       end
 
       def balance
-        request(:get, {id: "balance"})
+        child_request(:get, "balance")
         parse_response("balance")
       end
 

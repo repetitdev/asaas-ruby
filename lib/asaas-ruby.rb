@@ -28,6 +28,8 @@ module Asaas
   autoload :Account, 'asaas/models/account'
   autoload :Transfer, 'asaas/models/transfer'
   autoload :Balance, 'asaas/models/balance'
+  autoload :IdentificationField, 'asaas/models/identification_field'
+  autoload :PixQrCode, 'asaas/models/pix_qr_code'
 
   class << self
 

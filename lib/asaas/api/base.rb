@@ -46,11 +46,10 @@ module Asaas
       end
 
       protected
-      def parse_url(id = nil)
+      def parse_url(id = nil, path = nil)
         u = URI(@endpoint + @route)
-        if id
-          u.path += "/#{id}"
-        end
+        u.path += "/#{path}" if path
+        u.path += "/#{id}" if id
         u.to_s
       end
 
@@ -78,18 +77,22 @@ module Asaas
         if @api_version == 2
           "Asaas::Entity::#{type.capitalize}".constantize
         else
-          "Asaas::#{type.capitalize}".constantize
+          "Asaas::#{type.camelize}".constantize
         end
       rescue
         Asaas::Entity::Base
       end
 
-      def request(method, params = {}, body = nil)
+      def child_request(method, path)
+        request(method, {}, nil, path)
+      end
+
+      def request(method, params = {}, body = nil, path = nil)
         body = body.to_h
         body = body.delete_if { |k, v| v.nil? || v.to_s.empty? }
         body = body.to_json
         @response = Typhoeus::Request.new(
-            parse_url(params.fetch(:id, false)),
+            parse_url(params.fetch(:id, false), path),
             method: method,
             body: body,
             params: params,
