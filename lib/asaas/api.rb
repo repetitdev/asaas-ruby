@@ -10,5 +10,6 @@ module Asaas
     autoload :Webhook, 'asaas/api/webhook'
     autoload :Transfer, 'asaas/api/transfer'
     autoload :Document, 'asaas/api/document'
+    autoload :Finance, 'asaas/api/finance'
   end
 end

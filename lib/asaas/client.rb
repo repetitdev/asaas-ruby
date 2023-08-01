@@ -44,5 +44,9 @@ module Asaas
       @documents ||= Asaas::Api::Document.new(@token)
     end
 
+    def finance
+      @finance ||= Asaas::Api::Finance.new(@token, @api_version)
+    end
+
   end
 end

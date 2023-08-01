@@ -54,12 +54,12 @@ module Asaas
         u.to_s
       end
 
-      def parse_response
+      def parse_response(type = nil)
         res =  @response.response_code
         puts res if Asaas::Configuration.debug
         case @response.response_code
           when 200
-            res = response_success
+            res = response_success(type)
           when 400
             res = response_bad_request
           when 401
@@ -101,14 +101,14 @@ module Asaas
         ).run
       end
 
-      def response_success
+      def response_success(type = false)
         entity = nil
         hash = JSON.parse(@response.body)
         puts hash if Asaas::Configuration.debug
         if hash.fetch("object", false) === "list"
           entity = Asaas::Entity::Meta.new(hash)
         else
-          entity = convert_data_to_entity(hash.fetch("object", false))
+          entity = convert_data_to_entity(hash.fetch("object", type))
           entity = entity.new(hash) if entity
         end
 
