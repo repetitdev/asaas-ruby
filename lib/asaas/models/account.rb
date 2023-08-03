@@ -13,6 +13,8 @@ module Asaas
       attribute :province, Types::Coercible::String.optional
       attribute :postalCode, Types::Coercible::String.optional
       attribute :apiKey, Types::Coercible::String.optional.default(nil)
-      attribute :companyType, Types::Coercible::String.optional.default(nil) 
+      attribute :companyType, Types::Coercible::String.optional.default(nil)
+      attribute :birthDate, Types::Coercible::String.optional.default(nil)
+      attribute :webhooks, Types::Array.of(Webhook)
     end
   end
