@@ -7,5 +7,6 @@ module Asaas
     attribute :enabled, Types::Bool.optional.default(nil)
     attribute :interrupted, Types::Bool.optional.default(nil)
     attribute :authToken, Types::Coercible::String.optional.default { Asaas::Configuration.webhook_auth_token }
+    attribute :type, Types::Coercible::String.optional
   end
 end
