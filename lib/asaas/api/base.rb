@@ -91,6 +91,7 @@ module Asaas
         body = body.to_h
         body = body.delete_if { |k, v| v.nil? || v.to_s.empty? }
         body = body.to_json
+        puts body if Asaas::Configuration.debug
         @response = Typhoeus::Request.new(
             parse_url(params.fetch(:id, false), path),
             method: method,
