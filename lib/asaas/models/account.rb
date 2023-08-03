@@ -5,7 +5,7 @@ module Asaas
       attribute :name, Types::Coercible::String.optional
       attribute :email, Types::Coercible::String.optional
       attribute :cpfCnpj, Types::Coercible::String.optional
-      attribute :phone, Types::Coercible::String.optional
+      attribute :phone, Types::Coercible::String.optional.default(nil)
       attribute :mobilePhone, Types::Coercible::String.optional
       attribute :address, Types::Coercible::String.optional
       attribute :addressNumber, Types::Coercible::String.optional
