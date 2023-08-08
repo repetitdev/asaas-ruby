@@ -48,5 +48,9 @@ module Asaas
       @finance ||= Asaas::Api::Finance.new(@token, @api_version)
     end
 
+    def my_account
+      @my_account ||= Asaas::Api::MyAccount.new(@token, @api_version)
+    end
+
   end
 end

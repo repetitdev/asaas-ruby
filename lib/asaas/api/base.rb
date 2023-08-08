@@ -79,7 +79,8 @@ module Asaas
         else
           "Asaas::#{type.camelize}".constantize
         end
-      rescue
+      rescue StandardError => e
+        puts e.backtrace
         Asaas::Entity::Base
       end
 

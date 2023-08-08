@@ -11,5 +11,6 @@ module Asaas
     autoload :Transfer, 'asaas/api/transfer'
     autoload :Document, 'asaas/api/document'
     autoload :Finance, 'asaas/api/finance'
+    autoload :MyAccount, 'asaas/api/my_account'
   end
 end

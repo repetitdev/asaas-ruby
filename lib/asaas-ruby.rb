@@ -30,6 +30,10 @@ module Asaas
   autoload :Balance, 'asaas/models/balance'
   autoload :IdentificationField, 'asaas/models/identification_field'
   autoload :PixQrCode, 'asaas/models/pix_qr_code'
+  autoload :Documents, 'asaas/models/documents'
+  autoload :DocumentRequest, 'asaas/models/document_request'
+  autoload :DocumentResponsible, 'asaas/models/document_responsible'
+  autoload :DocumentFile, 'asaas/models/document_file'
 
   class << self
 
