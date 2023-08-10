@@ -15,6 +15,5 @@ module Asaas
       attribute :apiKey, Types::Coercible::String.optional.default(nil)
       attribute :companyType, Types::Coercible::String.optional.default(nil)
       attribute :birthDate, Types::Coercible::String.optional.default(nil)
-      attribute :webhooks, Types::Array.of(Webhook).optional.default([])
     end
   end

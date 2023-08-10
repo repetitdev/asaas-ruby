@@ -23,10 +23,6 @@ module Asaas
       nil
     end
 
-    mattr_accessor :webhook_auth_token do
-      nil
-    end
-
     mattr_accessor :api_version do
       3
     end
