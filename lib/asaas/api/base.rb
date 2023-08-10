@@ -72,21 +72,19 @@ module Asaas
       end
 
       def parse_response
-        res =  @response.response_code
-        puts "Response status: #{res}" if Asaas::Configuration.debug
-        case @response.response_code
-          when 200
-            res = response_success
-          when 400
-            res = response_bad_request
-          when 401
-            res = response_unauthorized
-          when 404
-            res = response_not_found
-          when 500
-            res = response_internal_server_error
-          else
-            res = response_not_found
+        response_code =  @response.response_code
+        puts "Response status: #{response_code}" if Asaas::Configuration.debug
+        case response_code
+        when 200
+          res = response_success
+        when 400
+          response_bad_request
+        when 401
+          raise Asaas::Api::Error.new('invalid_token', 'The api_key is invalid')
+        when 500
+          raise Asaas::Api::Error.new('internal_server_error', 'Internal Server Error')
+        else
+          raise Asaas::Api::Error.new('not_found', 'Object not found')
         end
         res
       end
@@ -98,39 +96,19 @@ module Asaas
         Hashie::Mash.new(hash)
       end
 
-      def response_unauthorized
-        error = Asaas::Entity::Error.new
-        error.errors << Asaas::Entity::ErrorItem.new(code: 'invalid_token', description: 'The api_key is invalid')
-        error
-      end
-
-      def response_internal_server_error
-        error = Asaas::Entity::Error.new
-        error.errors << Asaas::Entity::ErrorItem.new(code: 'internal_server_error', description: 'Internal Server Error')
-        error
-      end
-
-      def response_not_found
-        error = Asaas::Entity::Error.new
-        error.errors << Asaas::Entity::ErrorItem.new(code: 'not_found', description: 'Object not found')
-        error
-      end
-
       def response_bad_request
-        error = Asaas::Entity::Error.new
+        details = []
         begin
           hash = JSON.parse(@response.body)
           errors = hash.fetch("errors", [])
           errors.each do |item|
-            error.errors << Asaas::Entity::ErrorItem.new(item)
+            details << item
           end
           error
         rescue
-          error = Asaas::Entity::Error.new
-          error.errors << Asaas::Entity::ErrorItem.new(code: 'bad_request', description: 'Bad Request')
-          error
+          #ignore
         end
-        error
+        raise Asaas::Api::Error.new('bad_request', 'Bad request', details)
       end
 
       def get_headers

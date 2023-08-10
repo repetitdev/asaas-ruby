@@ -1,5 +1,6 @@
 module Asaas
   module Api
+    autoload :Error, 'asaas/api/error'
     autoload :Base, 'asaas/api/base'
     autoload :Account, 'asaas/api/account'
     autoload :City, 'asaas/api/city'
