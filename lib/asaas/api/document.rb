@@ -2,8 +2,8 @@ module Asaas
   module Api
     class Document < Asaas::Api::Base
 
-      def initialize(token)
-        super(token, 2, '/documents')
+      def initialize(token, api_version)
+        super(token, api_version, '/documents')
       end
 
       def upload(document_type, group_type, file)

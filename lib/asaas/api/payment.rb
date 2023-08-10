@@ -8,12 +8,10 @@ module Asaas
 
       def pix_qr_code(id)
         child_request(:get, "#{id}/pixQrCode")
-        parse_response("pix_qr_code")
       end
 
       def identification_field(id)
         child_request(:get, "#{id}/identificationField")
-        parse_response("identification_field")
       end
 
     end

@@ -8,7 +8,6 @@ module Asaas
   
         def documents
           child_request(:get, "documents")
-          parse_response("documents")
         end
   
       end

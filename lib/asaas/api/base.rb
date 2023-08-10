@@ -22,27 +22,22 @@ module Asaas
 
       def get(id)
         request(:get, {id: id})
-        parse_response
       end
 
       def list(params = {})
         request(:get, params)
-        parse_response
       end
 
       def create(attrs)
         request(:post, {}, attrs)
-        parse_response
       end
 
       def update(attrs)
         request(:post, {id: attrs.id}, attrs)
-        parse_response
       end
 
       def delete(id)
         request(:delete, {id: id})
-        parse_response
       end
 
       protected
@@ -51,37 +46,6 @@ module Asaas
         u.path += "/#{path}" if path
         u.path += "/#{id}" if id
         u.to_s
-      end
-
-      def parse_response(type = nil)
-        res =  @response.response_code
-        puts res if Asaas::Configuration.debug
-        case @response.response_code
-          when 200
-            res = response_success(type)
-          when 400
-            res = response_bad_request
-          when 401
-            res = response_unauthorized
-          when 404
-            res = response_not_found
-          when 500
-            res = response_internal_server_error
-          else
-            res = response_not_found
-        end
-        res
-      end
-
-      def convert_data_to_entity(type)
-        if @api_version == 2
-          "Asaas::Entity::#{type.capitalize}".constantize
-        else
-          "Asaas::#{type.camelize}".constantize
-        end
-      rescue StandardError => e
-        puts e.backtrace
-        Asaas::Entity::Base
       end
 
       def child_request(method, path)
@@ -104,20 +68,34 @@ module Asaas
              },
             verbose: Asaas::Configuration.debug
         ).run
+        parse_response
       end
 
-      def response_success(type = false)
+      def parse_response
+        res =  @response.response_code
+        puts "Response status: #{res}" if Asaas::Configuration.debug
+        case @response.response_code
+          when 200
+            res = response_success
+          when 400
+            res = response_bad_request
+          when 401
+            res = response_unauthorized
+          when 404
+            res = response_not_found
+          when 500
+            res = response_internal_server_error
+          else
+            res = response_not_found
+        end
+        res
+      end
+
+      def response_success
         entity = nil
         hash = JSON.parse(@response.body)
         puts hash if Asaas::Configuration.debug
-        if hash.fetch("object", false) === "list"
-          entity = Asaas::Entity::Meta.new(hash)
-        else
-          entity = convert_data_to_entity(hash.fetch("object", type))
-          entity = entity.new(hash) if entity
-        end
-
-        entity
+        Hashie::Mash.new(hash)
       end
 
       def response_unauthorized

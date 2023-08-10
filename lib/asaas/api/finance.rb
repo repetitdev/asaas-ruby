@@ -8,7 +8,6 @@ module Asaas
 
       def balance
         child_request(:get, "balance")
-        parse_response("balance")
       end
 
     end
