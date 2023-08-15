@@ -14,8 +14,8 @@ module Asaas
         child_request(:get, "#{id}/identificationField")
       end
 
-      def refund(id)
-        child_request(:get, "#{id}/refund")
+      def refund(id, params)
+        child_request(:post, "#{id}/refund", params)
       end
 
     end
