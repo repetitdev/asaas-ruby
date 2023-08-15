@@ -48,8 +48,8 @@ module Asaas
         u.to_s
       end
 
-      def child_request(method, path)
-        request(method, {}, nil, path)
+      def child_request(method, path, params = {})
+        request(method, params, nil, path)
       end
 
       def request(method, params = {}, body = nil, path = nil)
