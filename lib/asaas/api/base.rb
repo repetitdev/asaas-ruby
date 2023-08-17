@@ -1,3 +1,4 @@
+require 'faraday'
 module Asaas
   module Api
     class Base
@@ -21,58 +22,83 @@ module Asaas
       end
 
       def get(id)
-        request(:get, {id: id})
+        request(method: :get, path: make_path(id))
       end
 
       def list(params = {})
-        request(:get, params)
+        request(method: :get, params: params)
       end
 
       def create(attrs)
-        request(:post, {}, attrs)
+        request(method: :post, params: attrs)
       end
 
       def update(attrs)
-        request(:post, {id: attrs.id}, attrs)
+        request(method: :post, path: make_path(id), params: attrs)
       end
 
       def delete(id)
-        request(:delete, {id: id})
+        request(method: :delete, path: make_path(id))
       end
 
       protected
-      def parse_url(id = nil, path = nil)
+      def parse_url
         u = URI(@endpoint + @route)
-        u.path += "/#{path}" if path
-        u.path += "/#{id}" if id
+        puts u.to_s
         u.to_s
       end
 
-      def child_request(method, path, params = {})
-        request(method, params, nil, path)
+      def make_path(id = nil, path = nil)
+        return "#{path}" if path
+        return "#{id}" if id
       end
 
-      def request(method, params = {}, body = nil, path = nil)
+      def child_request(method, path, params = {})
+        
+        request(method: method, params: params, path: make_path(nil, path))
+      end
+
+      def request(method:, params: {}, path:)
         body = body.to_h
         body = body.delete_if { |k, v| v.nil? || v.to_s.empty? }
         body = body.to_json
         puts body if Asaas::Configuration.debug
-        @response = Typhoeus::Request.new(
-            parse_url(params.fetch(:id, false), path),
-            method: method,
-            body: body,
-            params: params,
-            headers: {
-              'access_token': @token || Asaas::Configuration.token,
-              'Content-Type': 'application/json'
-             },
-            verbose: Asaas::Configuration.debug
-        ).run
+        
+        logger = Logger.new $stderr
+        logger.level = Logger::DEBUG
+
+        conn = Faraday.new(
+          url: parse_url, 
+          headers: {
+            'access_token': @token || Asaas::Configuration.token,
+            'Content-Type': 'application/json;charset=utf-8',
+            'User-Agent': 'PostmanRuntime/7.32.3',
+            'Connection': 'keep-alive',
+            'Accept': '*/*',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Cache-Control': 'no-cache'
+           }
+        ) do |conn|
+          conn.response :logger, logger
+          conn.response :json
+          conn.request :json
+        end
+        
+        case method
+        when :get
+          @response = conn.get(path, params)
+        when :put
+          @response = conn.put(path, params)
+        when :post
+          @response = conn.post(path, params)
+        when :delete
+          @response = conn.post(path, params)
+        end
         parse_response
       end
 
       def parse_response
-        response_code =  @response.response_code
+        response_code =  @response.status
         puts "Response status: #{response_code}" if Asaas::Configuration.debug
         case response_code
         when 200
@@ -91,9 +117,8 @@ module Asaas
 
       def response_success
         entity = nil
-        hash = JSON.parse(@response.body)
         puts hash if Asaas::Configuration.debug
-        Hashie::Mash.new(hash)
+        Hashie::Mash.new(@response.body)
       end
 
       def response_bad_request
