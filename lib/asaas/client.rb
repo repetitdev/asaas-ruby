@@ -1,6 +1,5 @@
 module Asaas
   class Client
-
     attr_reader :token
 
     def initialize(token = nil, api_version = nil)
