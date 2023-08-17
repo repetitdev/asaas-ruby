@@ -58,7 +58,7 @@ module Asaas
         request(method: method, params: params, path: make_path(nil, path))
       end
 
-      def request(method:, params: {}, path:)
+      def request(method:, params: {}, path: nil)
         body = body.to_h
         body = body.delete_if { |k, v| v.nil? || v.to_s.empty? }
         body = body.to_json
