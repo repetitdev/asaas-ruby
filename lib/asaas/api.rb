@@ -13,5 +13,6 @@ module Asaas
     autoload :Document, 'asaas/api/document'
     autoload :Finance, 'asaas/api/finance'
     autoload :MyAccount, 'asaas/api/my_account'
+    autoload :Installment, 'asaas/api/installment'
   end
 end

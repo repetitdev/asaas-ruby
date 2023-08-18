@@ -51,5 +51,9 @@ module Asaas
       @my_account ||= Asaas::Api::MyAccount.new(@token, @api_version)
     end
 
+    def installments
+      @installment ||= Asaas::Api::Installment.new(@token, @api_version)
+    end
+
   end
 end
