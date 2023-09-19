@@ -118,12 +118,8 @@ module Asaas
       def response_bad_request
         details = []
         begin
-          hash = JSON.parse(@response.body)
-          errors = hash.fetch("errors", [])
-          errors.each do |item|
-            details << item
-          end
-          error
+          hash = Hashie::Mash.new(@response.body)
+          details = hash.errors
         rescue
           #ignore
         end
