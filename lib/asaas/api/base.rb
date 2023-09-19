@@ -22,7 +22,7 @@ module Asaas
       end
 
       def get(id)
-        request(method: :get, path: make_path(id))
+        request(method: :get, path: id)
       end
 
       def list(params = {})
@@ -34,11 +34,11 @@ module Asaas
       end
 
       def update(attrs)
-        request(method: :post, path: make_path(id), params: attrs)
+        request(method: :post, path: attrs.id, params: attrs)
       end
 
       def delete(id)
-        request(method: :delete, path: make_path(id))
+        request(method: :delete, path:id)
       end
 
       protected
@@ -48,14 +48,8 @@ module Asaas
         u.to_s
       end
 
-      def make_path(id = nil, path = nil)
-        return "#{path}" if path
-        return "#{id}" if id
-      end
-
       def child_request(method, path, params = {})
-        
-        request(method: method, params: params, path: make_path(nil, path))
+        request(method: method, params: params, path: path)
       end
 
       def request(method:, params: {}, path: nil)
