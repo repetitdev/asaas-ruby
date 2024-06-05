@@ -37,8 +37,8 @@ module Asaas
         request(method: :post, path: attrs.id, params: attrs)
       end
 
-      def delete(id)
-        request(method: :delete, path:id)
+      def delete(id, attrs)
+        request(method: :delete, path: id, params: attrs)
       end
 
       protected
@@ -86,7 +86,7 @@ module Asaas
         when :post
           @response = conn.post(path, params)
         when :delete
-          @response = conn.post(path, params)
+          @response = conn.delete(path, params)
         end
         parse_response
       end
