@@ -55,5 +55,9 @@ module Asaas
       @installment ||= Asaas::Api::Installment.new(@token, @api_version)
     end
 
+    def payment_links
+      @payment_links ||= Asaas::Api::PaymentLink.new(@token, @api_version)
+    end
+
   end
 end

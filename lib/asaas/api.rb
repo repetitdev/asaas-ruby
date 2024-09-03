@@ -14,5 +14,6 @@ module Asaas
     autoload :Finance, 'asaas/api/finance'
     autoload :MyAccount, 'asaas/api/my_account'
     autoload :Installment, 'asaas/api/installment'
+    autoload :PaymentLink, 'asaas/api/payment_link'
   end
 end
