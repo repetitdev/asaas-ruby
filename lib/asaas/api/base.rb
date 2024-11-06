@@ -66,7 +66,7 @@ module Asaas
           headers: {
             'access_token': @token || Asaas::Configuration.token,
             'Content-Type': 'application/json;charset=utf-8',
-            'User-Agent': 'PostmanRuntime/7.32.3',
+            'User-Agent': 'RepetitServer',
             'Connection': 'keep-alive',
             'Accept': '*/*',
             'Accept-Encoding': 'gzip, deflate, br',
