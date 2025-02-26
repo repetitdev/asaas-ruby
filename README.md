@@ -1,8 +1,6 @@
 # Asaas Ruby
 
-[![Build Status](https://travis-ci.org/thiagodiniz/asaas-ruby.svg?branch=master)](https://travis-ci.org/thiagodiniz/asaas-ruby)
-
-A biblioteca Asaas Ruby tem provê um acesso a API Rest do asaas.com.br
+A biblioteca Asaas Ruby provê um acesso a API Rest do asaas.com.br
 
 ## Installation
 
@@ -21,20 +19,11 @@ gem build asaas-ruby.gemspec
 
 ### Changelog
 
- - 0.2.24 - Add support to PIX billing type and fills missing CHANGELOG entries
- - 0.2.23 - Add support to Ruby 2.7 and Rails 6.1
- - 0.2.22 - Remove unecessary ActiveSupport version limit
- - 0.2.21 - Add credit fields to Payment
- - 0.2.20 - Adds debug flag to check responses
- - 0.2.19 - Small fixes
- - 0.2.18 - Account documents upload
- - 0.2.17 - Add support to DEPOSIT billing type
- - 0.2.16 - Wallet account tranfers
- - 0.2.15 - Bank account tranfers
+ - 0.2.27 - Initial
 
 ### Requirements
 
-- Ruby 2.3+.
+- Ruby 3.3+.
 
 ## Usage
 

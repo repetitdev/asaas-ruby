@@ -1,7 +1,3 @@
-require 'awesome_print'
-require 'active_support'
-require 'active_support/inflector'
-require 'rest-client'
 require 'typhoeus'
 require 'asaas/version'
 require 'json'

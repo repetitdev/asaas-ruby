@@ -18,16 +18,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", ">= 1.12"
-  spec.add_development_dependency "rake", ">= 10.0"
-  spec.add_development_dependency "rspec", ">= 3.2"
-  spec.add_development_dependency "webmock", ">= 3.7.2"
+  spec.add_development_dependency "bundler", "~> 2.5"
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "rspec", "~> 3.2"
+  spec.add_development_dependency "webmock", "~> 3.7.2"
 
-  spec.add_dependency "activesupport", '>= 4.2'
   spec.add_dependency "hashie", '~> 5.0'
-  spec.add_dependency "typhoeus", '>= 1.0'
-  spec.add_dependency "rest-client", '>= 1.8'
-  spec.add_dependency "awesome_print", '>= 1.6'
-  spec.add_dependency "concurrent-ruby", '1.3.4'
+  spec.add_dependency "typhoeus", '~> 1.0'
   spec.add_dependency "faraday"
+  
 end
